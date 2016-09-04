@@ -46,7 +46,7 @@ func (s *Service) ServeWithContext(c context.Context, w http.ResponseWriter, r *
 	}
 
 	var h contextHandler
-	var ps Params
+	var ps KVs
 
 	n, ok := s.routes[r.Method]
 

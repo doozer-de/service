@@ -10,12 +10,12 @@ import (
 	"unicode/utf8"
 )
 
-type Param struct {
+type KV struct {
 	Key   string
 	Value string
 }
 
-type Params []Param
+type KVs []KV
 
 func min(a, b int) int {
 	if a <= b {
@@ -327,7 +327,7 @@ func (n *node) insertChild(numParams uint8, path, fullPath string, handle contex
 // If no handle can be found, a TSR (trailing slash redirect) recommendation is
 // made if a handle exists with an extra (without the) trailing slash for the
 // given path.
-func (n *node) getValue(path string) (handle contextHandler, p Params, tsr bool) {
+func (n *node) getValue(path string) (handle contextHandler, p KVs, tsr bool) {
 walk: // outer loop for walking the tree
 	for {
 		if len(path) > len(n.path) {
@@ -366,7 +366,7 @@ walk: // outer loop for walking the tree
 					// save param value
 					if p == nil {
 						// lazy allocation
-						p = make(Params, 0, n.maxParams)
+						p = make(KVs, 0, n.maxParams)
 					}
 					i := len(p)
 					p = p[:i+1] // expand slice within preallocated capacity
@@ -401,7 +401,7 @@ walk: // outer loop for walking the tree
 					// save param value
 					if p == nil {
 						// lazy allocation
-						p = make(Params, 0, n.maxParams)
+						p = make(KVs, 0, n.maxParams)
 					}
 					i := len(p)
 					p = p[:i+1] // expand slice within preallocated capacity
